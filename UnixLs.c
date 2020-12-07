@@ -220,15 +220,19 @@ void readDirOption(char* path,bool flags[])//Option flags l R i
 
             if(strcmp(dp->d_name,".") && strcmp(dp->d_name,".."))
             {
-              //printf("KKK: %d %s %u %u %u %u %u\n",S_ISDIR(dps.st_mode),dp->d_name,dp->d_type,DT_DIR,DT_UNKNOWN,DT_LNK,DT_CHR);
-                if((S_ISDIR(dps.st_mode)) != 0)
-                {
-                    char str[1024] = {};
-                    strcat(str,path);
-                    strcat(str,"/");
-                    strcat(str,dp->d_name);
-                    readDirOption(str,flags);
-                }
+              if(dp->d_name[0] == '.')
+              {
+                continue;
+              }
+              
+              if((S_ISDIR(dps.st_mode)) != 0)
+              {
+                  char str[1024] = {};
+                  strcat(str,path);
+                  strcat(str,"/");
+                  strcat(str,dp->d_name);
+                  readDirOption(str,flags);
+              }
             }
         }
         closedir(dir);
