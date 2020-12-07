@@ -161,7 +161,6 @@ void readDirOption(char* path,bool flags[])//Option flags l R i
         char month[6];
         char day[6];
         char hourmin[6];
-        time(&dps.st_mtime);
         timeinfo = localtime(&dps.st_mtime);
         strftime(month,sizeof(month),"%b",timeinfo);
         strftime(day,sizeof(day),"%d",timeinfo);
