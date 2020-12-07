@@ -109,16 +109,16 @@ void readDirOption(char* path,bool flags[])//Option flags l R i
     bool symbolic = false;
     if(strcmp(dp->d_name,".") && strcmp(dp->d_name,".."))
     {
-        char statStr[1024] = {};
-        strcat(statStr,path);
-        strcat(statStr,"/");
-        strcat(statStr,dp->d_name);
+      char statStr[1024] = {};
+      strcat(statStr,path);
+      strcat(statStr,"/");
+      strcat(statStr,dp->d_name);
 
-        lstat(statStr,&dps);
+      lstat(statStr,&dps);
 
       if(flags[2])
       {
-        printf("%20lu",dps.st_ino);
+        printf("%-20lu",dps.st_ino);
       }
 
       char perm[11];
@@ -148,8 +148,8 @@ void readDirOption(char* path,bool flags[])//Option flags l R i
         perm[8] = (dps.st_mode & S_IWOTH) ? 'w' : '-';
         perm[9] = (dps.st_mode & S_IXOTH) ? 'x' : '-';
         perm[10] = '\0';
-        
-        printf("%12s",perm);
+
+        printf("%-13s",perm);
 
         printf("%5lu",dps.st_nlink);
         
