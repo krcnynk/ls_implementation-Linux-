@@ -244,6 +244,11 @@ void readDir(char* path)
 
   while((dp = readdir(dir)))
   {
+    if(dp->d_name[0] == '.')
+    {
+      continue;
+    }
+    
     if(strcmp(dp->d_name,".") && strcmp(dp->d_name,".."))
     {
       printf("%s",dp->d_name);
