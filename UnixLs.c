@@ -118,35 +118,38 @@ void readDirOption(char* path,bool flags[])//Option flags l R i
 
       if(flags[2])
       {
-        printf("%-5lu",dps.st_ino);
+        printf("%20lu",dps.st_ino);
       }
 
+      char perm[10];
       if(flags[0])
       {
         if(S_ISLNK(dps.st_mode) != 0)
         {
-          printf("l");
+          perm[0] = 'l';
           symbolic = true;
         }
         else if(S_ISDIR(dps.st_mode) != 0)
         {
-          printf("d");
+          perm[0] = 'd';
         }
         else
         {
-          printf("-");
+          perm[0] = '-';
         }
         
-        printf( (dps.st_mode & S_IRUSR) ? "r" : "-");
-        printf( (dps.st_mode & S_IWUSR) ? "w" : "-");
-        printf( (dps.st_mode & S_IXUSR) ? "x" : "-");
-        printf( (dps.st_mode & S_IRGRP) ? "r" : "-");
-        printf( (dps.st_mode & S_IWGRP) ? "w" : "-");
-        printf( (dps.st_mode & S_IXGRP) ? "x" : "-");
-        printf( (dps.st_mode & S_IROTH) ? "r" : "-");
-        printf( (dps.st_mode & S_IWOTH) ? "w" : "-");
-        printf( (dps.st_mode & S_IXOTH) ? "x" : "-");
+        perm[1] = (dps.st_mode & S_IRUSR) ? 'r' : '-';
+        perm[2] = (dps.st_mode & S_IWUSR) ? 'w' : '-';
+        perm[3] = (dps.st_mode & S_IXUSR) ? 'x' : '-';
+        perm[4] = (dps.st_mode & S_IRGRP) ? 'r' : '-';
+        perm[5] = (dps.st_mode & S_IWGRP) ? 'w' : '-';
+        perm[6] = (dps.st_mode & S_IXGRP) ? 'x' : '-';
+        perm[7] = (dps.st_mode & S_IROTH) ? 'r' : '-';
+        perm[8] = (dps.st_mode & S_IWOTH) ? 'w' : '-';
+        perm[9] = (dps.st_mode & S_IXOTH) ? 'x' : '-';
         
+        printf("%12s",perm);
+
         printf("%5lu",dps.st_nlink);
         
         struct passwd *pw = NULL;
@@ -157,7 +160,7 @@ void readDirOption(char* path,bool flags[])//Option flags l R i
         struct group *grp = NULL;
         grp = getgrgid(dps.st_gid);
         assert(grp); 
-        printf("%10s",grp->gr_name);
+        printf("%15s",grp->gr_name);
 
         printf("%7lu",dps.st_size);
 
@@ -248,7 +251,7 @@ void readDir(char* path)
     {
       continue;
     }
-    
+
     if(strcmp(dp->d_name,".") && strcmp(dp->d_name,".."))
     {
       printf("%s",dp->d_name);
