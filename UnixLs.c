@@ -101,6 +101,10 @@ void readDirOption(char* path,bool flags[])//Option flags l R i
 
   while((dp = readdir(dir)))
   {
+    if(dp->d_name[0] == '.')
+    {
+      continue;
+    }
     struct stat dps;
     bool symbolic = false;
     if(strcmp(dp->d_name,".") && strcmp(dp->d_name,".."))
